@@ -1,0 +1,7 @@
+{
+  "name": "SCcured",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
