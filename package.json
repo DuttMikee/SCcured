@@ -1,5 +1,5 @@
 {
-  "name": "SCcured",
+  "name": "sccured-unified",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -29,7 +29,8 @@
     "@ionic/angular": "^9.0.0",
     "ionicons": "^8.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "jspdf": "^4.2.1"
   },
   "devDependencies": {
     "@angular/build": "22.2.4",

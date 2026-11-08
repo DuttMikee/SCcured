@@ -1,0 +1,102 @@
+<app-header title="Student's Schedule"></app-header>
+
+<ion-content>
+  <div class="page-wrap">
+    <main class="page">
+      <span class="eyebrow">Library administration</span>
+      <h1 class="page-title">Schedule</h1>
+      <p class="page-sub">Review daily reservations and add students to available duty slots.</p>
+
+      <div class="layout">
+        <!-- calendar -->
+        <section class="card">
+          <h2>Duty calendar</h2>
+
+          <div class="month-row">
+            <h3>{{ month | date: 'MMMM yyyy' }}</h3>
+            <div>
+              <ion-button fill="clear" size="small" aria-label="Previous month" (click)="changeMonth(-1)">
+                <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" size="small" aria-label="Next month" (click)="changeMonth(1)">
+                <ion-icon slot="icon-only" name="chevron-forward"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="dow" *ngFor="let d of weekdays">{{ d }}</div>
+            <div *ngFor="let b of blanks"></div>
+            <button
+              type="button"
+              class="day"
+              *ngFor="let c of cells; trackBy: trackByKey"
+              [class.off]="c.off"
+              [class.sel]="c.key === selectedKey"
+              [class.past]="c.past && !c.off"
+              [disabled]="c.off || c.past"
+              (click)="select(c)"
+            >
+              <span class="num">{{ c.day }}</span>
+              <span class="sub">{{ c.off ? 'Off' : c.booked ? c.booked + '/' + seats : '—' }}</span>
+            </button>
+          </div>
+
+          <p class="muted legend">Booked / total seats · Weekends off · Past dates are unavailable.</p>
+        </section>
+
+        <!-- selected day -->
+        <aside class="card side">
+          <h2>{{ selectedDate | date: 'EEEE, d MMMM' }}</h2>
+          <span class="chip-soft">{{ bookedCount }} / {{ seats }} seats booked</span>
+
+          <span class="field-label top">Duty slot</span>
+          <ion-select class="plv-input" interface="popover" [value]="slot" aria-label="Duty slot">
+            <ion-select-option [value]="slot">{{ slot }}</ion-select-option>
+          </ion-select>
+
+          <div class="seat-head">
+            <span class="field-label">Booked seats</span>
+            <span class="muted">{{ bookedCount }} / {{ seats }}</span>
+          </div>
+          <ion-progress-bar [value]="bookedCount / seats"></ion-progress-bar>
+          <p class="muted avail">{{ free }} {{ free === 1 ? 'seat' : 'seats' }} available · 8-hour slot</p>
+
+          <ul class="booked">
+            <li *ngFor="let b of booked">
+              <div>
+                <strong>{{ b.student.name }}</strong>
+                <span class="muted">{{ b.student.section }} · Reserved</span>
+              </div>
+              <ion-button fill="clear" size="small" color="danger" aria-label="Remove booking" (click)="removeBooking(b.duty.id)">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+              </ion-button>
+            </li>
+            <li *ngIf="booked.length === 0" class="muted empty">No students booked for this day.</li>
+          </ul>
+
+          <span class="field-label top">Add student to this slot</span>
+          <ion-select
+            class="plv-input"
+            interface="popover"
+            placeholder="Select student"
+            [(ngModel)]="pickedStudentId"
+            [disabled]="free === 0"
+            aria-label="Select student"
+          >
+            <ion-select-option *ngFor="let s of available" [value]="s.id">
+              {{ s.name }} · {{ s.section }}
+            </ion-select-option>
+          </ion-select>
+
+          <ion-button expand="block" class="add" [disabled]="pickedStudentId === null || free === 0" (click)="addStudent()">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Add student
+          </ion-button>
+          <p class="muted full" *ngIf="free === 0">This slot is full.</p>
+        </aside>
+      </div>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</ion-content>

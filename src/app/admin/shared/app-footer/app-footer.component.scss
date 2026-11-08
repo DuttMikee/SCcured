@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.plv-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--plv-navy);
+  color: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  small {
+    display: block;
+    font-size: 9px;
+    opacity: 0.85;
+  }
+
+  strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+.services {
+  font-size: 10px;
+}
+
+@media (max-width: 520px) {
+  .plv-footer {
+    padding: 12px 14px;
+  }
+  .brand strong {
+    font-size: 13px;
+  }
+}
