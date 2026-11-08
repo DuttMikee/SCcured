@@ -1,0 +1,63 @@
+<app-header title="Students"></app-header>
+
+<ion-content>
+  <div class="page-wrap">
+    <main class="page">
+      <span class="eyebrow">Library administration / Sample workspace</span>
+      <h1 class="page-title">Students</h1>
+      <p class="page-sub">Manage student details and scheduling.</p>
+
+      <section class="card">
+        <label class="field-label" for="search">Search students</label>
+        <div class="toolbar-row">
+          <ion-input
+            id="search"
+            class="plv-input"
+            fill="outline"
+            placeholder="Search by name or section"
+            [(ngModel)]="term"
+          ></ion-input>
+          <ion-button (click)="add()">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Add student
+          </ion-button>
+        </div>
+
+        <p class="count">
+          {{ filtered.length }} {{ filtered.length === 1 ? 'student' : 'students' }} ·
+          {{ term ? 'Filtered' : 'All sections' }}
+        </p>
+
+        <div class="table-scroll">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Hours</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of filtered; trackBy: trackById">
+                <td class="name">{{ s.name }}</td>
+                <td>{{ s.section }}</td>
+                <td>{{ data.hoursFor(s.id) }} h</td>
+                <td class="actions">
+                  <ion-button size="small" fill="outline" (click)="edit(s)">Edit</ion-button>
+                  <ion-button size="small" fill="outline" color="danger" (click)="remove(s)">Remove</ion-button>
+                </td>
+              </tr>
+              <tr *ngIf="filtered.length === 0">
+                <td colspan="4" class="empty">No students match your search.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <div class="mini-footer">PLV Library • Student Library Duty Social Contract</div>
+    <app-footer></app-footer>
+  </div>
+</ion-content>

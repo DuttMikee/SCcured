@@ -1,0 +1,33 @@
+.titles {
+  padding-left: 4px;
+  line-height: 1.25;
+}
+
+.t1 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.t2 {
+  font-size: 9px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.logos {
+  display: flex;
+  gap: 8px;
+  padding-right: 14px;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 420px) {
+  .t2 {
+    display: none;
+  }
+}
